@@ -1,0 +1,19 @@
+{
+  "name": "tinyscript",
+  "version": "1.0.0",
+  "description": "为了学习编译原理，自己动手实践一个的编译器",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
+  "dependencies": {
+    "linkedlist": "^1.0.1"
+  }
+}
