@@ -4,6 +4,8 @@
  * 创建作者：Potter
  * 开发版本：1.0.0
  * 相关说明：迭代器
+ *
+ * 读取迭代器工具，方便词法分析、语法分析等
  */
 
 const linkedlist = require("linkedlist");
@@ -11,7 +13,7 @@ const linkedlist = require("linkedlist");
 class PeekIterator {
 	constructor(it, endToken = null) {
 		this._it = it;
-		this._endToken = null;
+		this._endToken = endToken;
 		//! 放回的元素栈
 		this._stackPutBack = new linkedlist();
 		//! 缓存队列
@@ -41,6 +43,10 @@ class PeekIterator {
 			e = this._stackPutBack.pop();
 		} else {
 			e = this._it.next().value;
+			if (e == null) {
+				e = this._endToken;
+				this._endToken = null;
+			}
 		}
 
 		if (e) {
