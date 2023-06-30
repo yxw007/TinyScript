@@ -16,7 +16,10 @@ const Keywords = new Set([
 	"string",
 ]);
 
+const END_CHAR = "\0";
+
 module.exports = {
 	BASE_TYPES,
 	Keywords,
+	END_CHAR,
 };

@@ -9,9 +9,9 @@
  */
 
 const linkedlist = require("linkedlist");
-
+const { END_CHAR } = require("./common");
 class PeekIterator {
-	constructor(it, endToken = null) {
+	constructor(it, endToken = END_CHAR) {
 		this._it = it;
 		this._endToken = endToken;
 		//! 放回的元素栈
