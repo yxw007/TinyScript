@@ -2,21 +2,23 @@ const { BASE_TYPES, Keywords } = require("../common/common");
 const TokenType = require("./TokenType");
 
 class Token {
+	#type = null;
+	#value = null;
 	constructor(type, value) {
-		this._type = type;
-		this._value = value;
+		this.#type = type;
+		this.#value = value;
 	}
 
 	get type() {
-		return this._type;
+		return this.#type;
 	}
 
 	get value() {
-		return this._value;
+		return this.#value;
 	}
 
 	isVariable() {
-		return this._type == TokenType.VARIABLE;
+		return this.#type == TokenType.VARIABLE;
 	}
 
 	isValue() {
@@ -25,19 +27,19 @@ class Token {
 
 	isScalar() {
 		return (
-			this._type == TokenType.INTEGER ||
-			this._type == TokenType.FLOAT ||
-			this._type == TokenType.STRING ||
-			this._type == TokenType.BOOLEAN
+			this.#type == TokenType.INTEGER ||
+			this.#type == TokenType.FLOAT ||
+			this.#type == TokenType.STRING ||
+			this.#type == TokenType.BOOLEAN
 		);
 	}
 
 	isType() {
-		return BASE_TYPES.includes(this._type);
+		return BASE_TYPES.includes(this.#type);
 	}
 
 	toString() {
-		return `type: ${this._type},value:${this._value}`;
+		return `type: ${this.#type},value:${this.#value}`;
 	}
 }
 

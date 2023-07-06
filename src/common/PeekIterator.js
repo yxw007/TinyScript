@@ -11,18 +11,22 @@
 const linkedlist = require("linkedlist");
 const { END_CHAR } = require("./common");
 class PeekIterator {
+	#it = null;
+	#endToken = null;
+	#stackPutBack = null;
+	#queueCache = null;
+	#cacheSize = 10;
 	constructor(it, endToken = END_CHAR) {
-		this._it = it;
-		this._endToken = endToken;
+		this.#it = it;
+		this.#endToken = endToken;
 		//! 放回的元素栈
-		this._stackPutBack = new linkedlist();
+		this.#stackPutBack = new linkedlist();
 		//! 缓存队列
-		this._queueCache = new linkedlist();
-		this._cacheSize = 10;
+		this.#queueCache = new linkedlist();
 	}
 	peek() {
-		if (this._stackPutBack.length > 0) {
-			return this._stackPutBack.tail;
+		if (this.#stackPutBack.length > 0) {
+			return this.#stackPutBack.tail;
 		}
 
 		let e = this.next();
@@ -30,31 +34,31 @@ class PeekIterator {
 		return e;
 	}
 	putBack() {
-		if (this._queueCache.length > 0) {
-			this._stackPutBack.push(this._queueCache.pop());
+		if (this.#queueCache.length > 0) {
+			this.#stackPutBack.push(this.#queueCache.pop());
 		}
 	}
 	hasNext() {
-		return this._stackPutBack.length > 0 || this._it.hasNext();
+		return this.#stackPutBack.length > 0 || this.#it.hasNext();
 	}
 	next() {
 		let e = null;
-		if (this._stackPutBack.length > 0) {
-			e = this._stackPutBack.pop();
+		if (this.#stackPutBack.length > 0) {
+			e = this.#stackPutBack.pop();
 		} else {
-			e = this._it.next().value;
+			e = this.#it.next().value;
 			if (e == null) {
-				e = this._endToken;
-				this._endToken = null;
+				e = this.#endToken;
+				this.#endToken = null;
 			}
 		}
 
 		if (e) {
-			while (this._queueCache.length > this._cacheSize - 1) {
-				this._queueCache.shift();
+			while (this.#queueCache.length > this.#cacheSize - 1) {
+				this.#queueCache.shift();
 			}
 			//!说明：从stackPutBack pop出来的元素，也需要push进缓存
-			this._queueCache.push(e);
+			this.#queueCache.push(e);
 		}
 
 		return e;
