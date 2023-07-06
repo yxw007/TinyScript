@@ -4,6 +4,11 @@ class AlphabetHelper {
 	static regLiteral = /^[_a-zA-Z0-9]$/;
 	static regOperator = /^[+\-*/><=!&|^%,]$/;
 	static regEmpty = /^[ \n\r]$/;
+	static regBracket = /^[{}()]$/;
+
+	static isBracket(c) {
+		return AlphabetHelper.regBracket.test(c);
+	}
 
 	static isLetter(c) {
 		return AlphabetHelper.regLetter.test(c);
