@@ -89,7 +89,110 @@ class Lexer {
 	}
 
 	static processNumber(it) {
-		//TODO:
+		if (!AlphabetHelper.isNumber(it.peek())) {
+			return;
+		}
+
+		let state = 0;
+		let s = "";
+
+		while (it.hasNext()) {
+			let lookahead = it.peek();
+			switch (state) {
+				case 0: {
+					if (lookahead == "0") {
+						state = 3;
+					} else if (lookahead == "-") {
+						state = 1;
+					} else if (/[1-9]/.test(lookahead)) {
+						state = 2;
+					} else {
+						throw LexicalException.fromChar(lookahead);
+					}
+					break;
+				}
+				case 1: {
+					if (lookahead == "0") {
+						state = 3;
+					} else if (/[1-9]/.test(lookahead)) {
+						state = 2;
+					} else {
+						throw LexicalException.fromChar(lookahead);
+					}
+					break;
+				}
+				case 2: {
+					if (lookahead == ".") {
+						state = 4
+					} else if (AlphabetHelper.isNumber(lookahead)) {
+						continue;
+					} else if (/[e|E]/.test(lookahead)) {
+						state = 5;
+					} else {
+						return new Token(TokenType.INTEGER, s);
+					}
+					break;
+				}
+				case 3: {
+					if (/[e|E]/.test(lookahead)) {
+						state = 5
+					} else if (lookahead == ".") {
+						state = 4;
+					} else {
+						return new Token(TokenType.INTEGER, s);
+					}
+					break;
+				}
+				case 4: {
+					if (AlphabetHelper.isNumber(lookahead)) {
+						state = 6;
+					} else {
+						throw LexicalException.fromChar(lookahead);
+					}
+					break;
+				}
+				case 5: {
+					if (AlphabetHelper.isNumber(lookahead)) {
+						state = 8;
+					} else if (/[+-]/.test(lookahead)) {
+						state = 7;
+					} else {
+						throw LexicalException.fromChar(lookahead);
+					}
+					break;
+				}
+				case 6: {
+					if (AlphabetHelper.isNumber(lookahead)) {
+						continue;
+					} else if (/[e|E]/.test(lookahead)) {
+						state = 5;
+					} else {
+						return new Token(TokenType.FLOAT, s);
+					}
+					break;
+				}
+				case 7: {
+					if (AlphabetHelper.isNumber(lookahead)) {
+						state = 8;
+					} else {
+						throw LexicalException.fromChar(lookahead);
+					}
+					break;
+				}
+				case 8: {
+					if (AlphabetHelper.isNumber(lookahead)) {
+						continue;
+					} else {
+						return new Token(s.indexOf(".") >= 0 ? TokenType.FLOAT : TokenType.INTEGER, s);
+					}
+				}
+			}
+
+			s += lookahead;
+			it.next();
+		}
+
+		throw new LexicalException("Unexpected error");
 	}
 
 	static processOperator(it) {
@@ -130,13 +233,13 @@ class Lexer {
 			}
 
 			//! 4.识别Number
-			if (token == Lexer.processNumber(it)) {
+			if (token = Lexer.processNumber(it)) {
 				tokens.push(token);
 				continue;
 			}
 
 			//! 5.识别Operator
-			if (token == Lexer.processOperator(it)) {
+			if (token = Lexer.processOperator(it)) {
 				tokens.push(token);
 				continue;
 			}
