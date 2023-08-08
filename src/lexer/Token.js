@@ -9,12 +9,16 @@ class Token {
 		this.#value = value;
 	}
 
-	get type() {
+	getType() {
 		return this.#type;
 	}
 
-	get value() {
+	getValue() {
 		return this.#value;
+	}
+
+	setValue(val) {
+		this.#value = val;
 	}
 
 	isVariable() {

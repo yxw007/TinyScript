@@ -39,7 +39,7 @@ class PeekIterator {
 		}
 	}
 	hasNext() {
-		return this.#stackPutBack.length > 0 || this.#it.hasNext();
+		return this.#endToken || !!this.peek();
 	}
 	next() {
 		let e = null;

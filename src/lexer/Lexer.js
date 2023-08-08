@@ -125,7 +125,7 @@ class Lexer {
 					if (lookahead == ".") {
 						state = 4
 					} else if (AlphabetHelper.isNumber(lookahead)) {
-						continue;
+						state = 2;
 					} else if (/[e|E]/.test(lookahead)) {
 						state = 5;
 					} else {
@@ -163,7 +163,7 @@ class Lexer {
 				}
 				case 6: {
 					if (AlphabetHelper.isNumber(lookahead)) {
-						continue;
+						state = 6;
 					} else if (/[e|E]/.test(lookahead)) {
 						state = 5;
 					} else {
@@ -181,7 +181,7 @@ class Lexer {
 				}
 				case 8: {
 					if (AlphabetHelper.isNumber(lookahead)) {
-						continue;
+						state = 8;
 					} else {
 						return new Token(s.indexOf(".") >= 0 ? TokenType.FLOAT : TokenType.INTEGER, s);
 					}
@@ -196,10 +196,180 @@ class Lexer {
 	}
 
 	static processOperator(it) {
-		//TODO:
+		let state = 0;
+		while (it.hasNext()) {
+			let lookahead = it.next();
+
+			switch (state) {
+				case 0:
+					switch (lookahead) {
+						case "+":
+							state = 1;
+							break;
+						case "-":
+							state = 2;
+							break;
+						case "*":
+							state = 3;
+							break;
+						case "/":
+							state = 4;
+							break;
+						case ">":
+							state = 5;
+							break;
+						case "<":
+							state = 6;
+							break;
+						case "=":
+							state = 7;
+							break;
+						case "!":
+							state = 8;
+							break;
+						case "&":
+							state = 9;
+							break;
+						case "|":
+							state = 10;
+							break;
+						case "^":
+							state = 11;
+							break;
+						case "%":
+							state = 12;
+							break;
+						case ",":
+							return new Token(TokenType.OPERATOR, ",");
+						case ";":
+							return new Token(TokenType.OPERATOR, ";");
+					}
+					break;
+				case 1: {
+					if (lookahead == "+") {
+						return new Token(TokenType.OPERATOR, "++");
+					} else if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "+=");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "+");
+					}
+				}
+				case 2:
+					if (lookahead == "-") {
+						return new Token(TokenType.OPERATOR, "--");
+					} else if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "-=");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "-");
+					}
+				case 3:
+					if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "*=");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "*");
+					}
+				case 4:
+					if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "/=");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "/");
+					}
+				case 5:
+					if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, ">=");
+					} else if (lookahead == ">") {
+						return new Token(TokenType.OPERATOR, ">>");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, ">");
+					}
+				case 6:
+					if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "<=");
+					} else if (lookahead == "<") {
+						return new Token(TokenType.OPERATOR, "<<");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "<");
+					}
+				case 7:
+					if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "==");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "=");
+					}
+				case 8:
+					if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "!=");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "!");
+					}
+				case 9:
+					if (lookahead == "&") {
+						return new Token(TokenType.OPERATOR, "&&");
+					} else if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "&=");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "&");
+					}
+				case 10:
+					if (lookahead == "|") {
+						return new Token(TokenType.OPERATOR, "||");
+					} else if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "|=");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "|");
+					}
+				case 11:
+					if (lookahead == "^") {
+						return new Token(TokenType.OPERATOR, "^^");
+					} else if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "^=");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "^");
+					}
+				case 12:
+					if (lookahead == "=") {
+						return new Token(TokenType.OPERATOR, "%=");
+					} else {
+						it.putBack();
+						return new Token(TokenType.OPERATOR, "%");
+					}
+			}
+		}
+
+		throw new LexicalException("Unexpected error");
 	}
 
-	static analyse(source) {
+	static processSignNumber(it, tokens = []) {
+		if (!AlphabetHelper.isSign(it.peek())) {
+			return;
+		}
+
+		let c = it.next();
+		let lookahead = it.peek();
+		if (AlphabetHelper.isNumber(lookahead)) {
+			let lastToken = tokens.length && tokens[tokens.length - 1];
+			//! 说明：+b or =+b  都需要识别成数字+b
+			if (lastToken == null || !lastToken.isValue()) {
+				const token = Lexer.processNumber(it);
+				token.setValue(c + token.getValue());
+				return token;
+			}
+		}
+		it.putBack();
+	}
+
+	analyse(source) {
 		const tokens = [];
 		const it = new PeekIterator(source);
 
@@ -238,6 +408,12 @@ class Lexer {
 				continue;
 			}
 
+			//! 5.识别, +b or =+b  都需要识别成数字+b
+			if (token = Lexer.processSignNumber(it, tokens)) {
+				tokens.push(token);
+				continue;
+			}
+
 			//! 5.识别Operator
 			if (token = Lexer.processOperator(it)) {
 				tokens.push(token);
@@ -250,3 +426,5 @@ class Lexer {
 		return tokens;
 	}
 }
+
+module.exports = Lexer;

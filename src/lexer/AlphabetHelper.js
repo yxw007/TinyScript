@@ -5,6 +5,7 @@ class AlphabetHelper {
 	static regOperator = /^[+\-*/><=!&|^%,]$/;
 	static regEmpty = /^[ \n\r]$/;
 	static regBracket = /^[{}()]$/;
+	static regSign = /^[+-]$/;
 
 	static isBracket(c) {
 		return AlphabetHelper.regBracket.test(c);
@@ -16,6 +17,10 @@ class AlphabetHelper {
 
 	static isNumber(c) {
 		return AlphabetHelper.regNumber.test(c);
+	}
+
+	static isSign(c) {
+		return AlphabetHelper.regSign.test(c);
 	}
 
 	static isLiteral(c) {
