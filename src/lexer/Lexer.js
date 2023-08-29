@@ -381,6 +381,7 @@ class Lexer {
 
 			//! 0.识别空字符
 			if (isEmpty(c)) {
+				it.next();
 				continue;
 			}
 

@@ -9,6 +9,14 @@ function assertToken(token, value, type) {
 }
 
 describe("Lexer", () => {
+
+	it("declare stmt", () => {
+		const source = "10";
+		const lexer = new Lexer();
+		const tokens = lexer.analyse(arrayToGenerator([...source]));
+		assertToken(tokens[0], "int", TokenType.KEYWORD);
+	})
+
 	it("expression", () => {
 		const source = '(a+b)^100.12==+100-20'
 		const lexer = new Lexer()
