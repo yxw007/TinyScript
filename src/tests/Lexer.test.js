@@ -11,10 +11,13 @@ function assertToken(token, value, type) {
 describe("Lexer", () => {
 
 	it("declare stmt", () => {
-		const source = "10";
+		const source = "int a=1";
 		const lexer = new Lexer();
 		const tokens = lexer.analyse(arrayToGenerator([...source]));
 		assertToken(tokens[0], "int", TokenType.KEYWORD);
+		assertToken(tokens[1], "a", TokenType.VARIABLE);
+		assertToken(tokens[2], "=", TokenType.OPERATOR);
+		assertToken(tokens[3], "1", TokenType.INTEGER);
 	})
 
 	it("expression", () => {
