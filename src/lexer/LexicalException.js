@@ -8,4 +8,4 @@ class LexicalException extends Error {
 	}
 }
 
-module.exports = LexicalException;
+export default LexicalException;

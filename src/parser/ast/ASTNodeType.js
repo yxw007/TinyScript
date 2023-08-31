@@ -1,6 +1,6 @@
-const Enum = require('../../common/Enum')
+import Enum from '../../common/Enum'
 
-module.exports = {
+export default {
 	BLOCK: new Enum("BLOCK", 1),
 	//二元表达式，比如：+、-、*、/ 等
 	BINARY_EXPR: new Enum("BINARY_EXPR", 2),

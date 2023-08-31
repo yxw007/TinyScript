@@ -1,7 +1,7 @@
-const Lexer = require('../lexer/Lexer')
-const arrayToGenerator = require('../common/arrayToGenerator')
-const { assert } = require("chai");
-const TokenType = require('../lexer/TokenType');
+import Lexer from '../src/lexer/Lexer';
+import arrayToGenerator from '../src/common/arrayToGenerator';
+import { assert } from "chai"
+import TokenType from '../src/lexer/TokenType';
 
 function assertToken(token, value, type) {
 	assert.equal(token.getValue(), value)

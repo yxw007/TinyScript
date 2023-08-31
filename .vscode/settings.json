@@ -1,3 +1,7 @@
 {
-	"mochaExplorer.files": "src/tests/**/*.test.js"
+	"mochaExplorer.files": "src/tests/**/*.test.js",
+	"cSpell.words": [
+		"analyse",
+		"tinyscript",
+	]
 }

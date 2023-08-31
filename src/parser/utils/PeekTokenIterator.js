@@ -1,5 +1,5 @@
-const PeekIterator = require("../../common/PeekIterator");
-const ParseException = require("./ParseException");
+import PeekIterator from "../../common/PeekIterator"
+import ParseException from "./ParseException"
 
 class PeekTokenIterator extends PeekIterator {
 	constructor(it) {
@@ -15,4 +15,4 @@ class PeekTokenIterator extends PeekIterator {
 	}
 }
 
-module.exports = PeekTokenIterator;
+export default PeekTokenIterator;

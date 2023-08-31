@@ -1,4 +1,4 @@
-const ASTNode = require("./ASTNode");
+import ASTNode from "./ASTNode"
 
 class Stmt extends ASTNode {
 	constructor(type, label) {
@@ -9,4 +9,4 @@ class Stmt extends ASTNode {
 	}
 }
 
-module.exports = Stmt;
+export default Stmt;

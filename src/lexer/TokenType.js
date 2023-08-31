@@ -1,4 +1,4 @@
-const Enum = require("../common/Enum");
+import Enum from "../common/Enum"
 
 const TokenType = {
 	KEYWORD: new Enum("KEYWORD", 1),
@@ -11,4 +11,4 @@ const TokenType = {
 	STRING: new Enum("STRING", 8),
 };
 
-module.exports = TokenType;
+export default TokenType;

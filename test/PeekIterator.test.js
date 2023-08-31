@@ -1,6 +1,6 @@
-const PeekIterator = require("../common/PeekIterator");
-const arrayToGenerator = require("../common/arrayToGenerator");
-const { assert } = require("chai");
+import PeekIterator from "../src/common/PeekIterator"
+import arrayToGenerator from "../src/common/arrayToGenerator"
+import { assert } from "chai"
 
 describe("test PeekIterator", () => {
 	it("peek", () => {

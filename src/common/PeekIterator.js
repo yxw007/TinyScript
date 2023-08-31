@@ -8,8 +8,9 @@
  * 读取迭代器工具，方便词法分析、语法分析等
  */
 
-const linkedlist = require("linkedlist");
-const { END_CHAR } = require("./common");
+import linkedlist from "linkedlist"
+import { END_CHAR } from "./common";
+
 class PeekIterator {
 	#it = null;
 	#endToken = null;
@@ -65,4 +66,4 @@ class PeekIterator {
 	}
 }
 
-module.exports = PeekIterator;
+export default PeekIterator;

@@ -1,4 +1,4 @@
-const AstNodeType = require('./ASTNodeType')
+import AstNodeType from './ASTNodeType'
 
 class ASTNode {
 	#children = [];
@@ -17,8 +17,8 @@ class ASTNode {
 		this.#label = label;
 	}
 
-	
+
 
 }
 
-module.exports = ASTNode;
+export default ASTNode;

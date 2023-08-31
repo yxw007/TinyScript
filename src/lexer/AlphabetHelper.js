@@ -36,4 +36,4 @@ class AlphabetHelper {
 	}
 }
 
-module.exports = AlphabetHelper;
+export default AlphabetHelper;

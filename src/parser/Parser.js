@@ -1,7 +1,7 @@
-const Lexer = require('../lexer/Lexer')
-const arrayToGenerator = require('../common/arrayToGenerator');
-const PeekTokenIterator = require('./utils/PeekTokenIterator');
-const Program = require('./ast/Program');
+import Lexer from '../lexer/Lexer'
+import arrayToGenerator from '../common/arrayToGenerator';
+import PeekTokenIterator from './utils/PeekTokenIterator';
+import Program from './ast/Program';
 
 class Parser {
 	static parse(source) {
@@ -15,4 +15,4 @@ class Parser {
 	}
 }
 
-module.exports = Parser;
+export default Parser;

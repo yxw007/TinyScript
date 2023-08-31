@@ -1,6 +1,6 @@
-const ASTNode = require("./ASTNode");
-const ASTNodeType = require("./ASTNodeType");
-const Stmt = require("./Stmt");
+import ASTNode from "./ASTNode"
+import ASTNodeType from "./ASTNodeType"
+import Stmt from "./Stmt"
 
 class Program extends ASTNode {
 	constructor() {
@@ -17,4 +17,4 @@ class Program extends ASTNode {
 	}
 }
 
-module.exports = Program;
+export default Program;

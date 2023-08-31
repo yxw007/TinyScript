@@ -1,5 +1,5 @@
-const { BASE_TYPES, Keywords } = require("../common/common");
-const TokenType = require("./TokenType");
+import { BASE_TYPES, Keywords } from "../common/common"
+import TokenType from "./TokenType"
 
 class Token {
 	#type = null;
@@ -47,4 +47,4 @@ class Token {
 	}
 }
 
-module.exports = Token;
+export default Token;

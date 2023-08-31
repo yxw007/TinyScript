@@ -4,4 +4,4 @@ function* arrayToGenerator(arr) {
 	}
 }
 
-module.exports = arrayToGenerator;
+export default arrayToGenerator;

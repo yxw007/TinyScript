@@ -1,6 +1,5 @@
-const BASE_TYPES = ["bool", "int", "float", "void", "string"];
-
-const Keywords = new Set([
+export const BASE_TYPES = ["bool", "int", "float", "void", "string"];
+export const Keywords = new Set([
 	"var",
 	"if",
 	"else",
@@ -15,11 +14,4 @@ const Keywords = new Set([
 	"void",
 	"string",
 ]);
-
-const END_CHAR = "\0";
-
-module.exports = {
-	BASE_TYPES,
-	Keywords,
-	END_CHAR,
-};
+export const END_CHAR = "\0";

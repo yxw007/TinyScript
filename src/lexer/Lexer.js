@@ -6,13 +6,12 @@
  * 相关说明：词法分析
  */
 
-const PeekIterator = require("../common/PeekIterator");
-const { END_CHAR, Keywords } = require("../common/common");
-const AlphabetHelper = require("./AlphabetHelper");
-const { isEmpty } = require("./AlphabetHelper");
-const LexicalException = require("./LexicalException");
-const Token = require("./Token");
-const TokenType = require("./TokenType");
+import PeekIterator from "../common/PeekIterator"
+import { END_CHAR, Keywords } from "../common/common"
+import AlphabetHelper from "./AlphabetHelper"
+import LexicalException from "./LexicalException"
+import Token from "./Token"
+import TokenType from "./TokenType"
 
 class Lexer {
 	/**
@@ -380,7 +379,7 @@ class Lexer {
 			}
 
 			//! 0.识别空字符
-			if (isEmpty(c)) {
+			if (AlphabetHelper.isEmpty(c)) {
 				it.next();
 				continue;
 			}
@@ -428,4 +427,4 @@ class Lexer {
 	}
 }
 
-module.exports = Lexer;
+export default Lexer;
