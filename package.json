@@ -5,16 +5,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha --recursive --es-module-specifier-resolution=node ./**/*.test.js"
+    "test": "vitest --api 9527"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^4.3.7",
-    "mocha": "^10.2.0"
-  },
-  "dependencies": {
-    "linkedlist": "^1.0.1"
+    "vitest": "^0.34.3"
   }
 }

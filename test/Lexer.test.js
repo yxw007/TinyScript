@@ -1,11 +1,11 @@
+import { it, expect } from "vitest";
 import Lexer from '../src/lexer/Lexer';
 import arrayToGenerator from '../src/common/arrayToGenerator';
-import { assert } from "chai"
 import TokenType from '../src/lexer/TokenType';
 
 function assertToken(token, value, type) {
-	assert.equal(token.getValue(), value)
-	assert.equal(token.getType(), type)
+	expect(token.getValue()).toEqual(value)
+	expect(token.getType()).toEqual(type)
 }
 
 describe("Lexer", () => {
@@ -24,7 +24,7 @@ describe("Lexer", () => {
 		const source = '(a+b)^100.12==+100-20'
 		const lexer = new Lexer()
 		const tokens = lexer.analyse(arrayToGenerator([...source]))
-		assert.equal(tokens.length, 11)
+		expect(tokens.length).toEqual(11)
 
 		assertToken(tokens[0], '(', TokenType.BRACKET)
 		assertToken(tokens[1], "a", TokenType.VARIABLE);

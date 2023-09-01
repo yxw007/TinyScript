@@ -8,7 +8,7 @@
  * 读取迭代器工具，方便词法分析、语法分析等
  */
 
-import linkedlist from "linkedlist"
+import Linkedlist from "./linkedlist"
 import { END_CHAR } from "./common";
 
 class PeekIterator {
@@ -21,9 +21,9 @@ class PeekIterator {
 		this.#it = it;
 		this.#endToken = endToken;
 		//! 放回的元素栈
-		this.#stackPutBack = new linkedlist();
+		this.#stackPutBack = new Linkedlist();
 		//! 缓存队列
-		this.#queueCache = new linkedlist();
+		this.#queueCache = new Linkedlist();
 	}
 	peek() {
 		if (this.#stackPutBack.length > 0) {
