@@ -15,3 +15,7 @@
 - [编译原理（国防科技大学/NUDT）](https://www.bilibili.com/video/BV1DJ411M7eV/?spm_id_from=333.999.0.0&vd_source=48d3cd04603032362c730cc7de10ac65)
 - [dragonbook](https://suif.stanford.edu/dragonbook/)
 - [大学计算机必修课新讲--编译原理+操作系统+图形学(付费课程)](https://coding.imooc.com/learn/list/432.html)
+
+## 关键词
+- Lexer: 词法相关
+- Lexeme：语义相关
