@@ -3,10 +3,9 @@ import ASTNode from "./ASTNode";
 import Variable from "./Variable";
 
 class Factor extends ASTNode {
-	constructor(token) {
-		super();
+	constructor(type = null, labelOrToken = null) {
+		super(type, labelOrToken.getValue());
 		this.lexeme = token;
-		this.label = token.getValue();
 	}
 	static parse(it) {
 		const token = it.peek();

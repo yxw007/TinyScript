@@ -1,4 +1,4 @@
-import AstNodeType from './ASTNodeType'
+import AstNodeType from "./ASTNodeType";
 
 class ASTNode {
 	#children = [];
@@ -12,13 +12,18 @@ class ASTNode {
 	 * @param {*} type 类型
 	 * @param {*} label 节点名称
 	 */
-	constructor(type, label) {
+	constructor(type = null, label = null) {
 		this.#type = type;
 		this.#label = label;
 	}
 
+	set lexeme(val) {
+		this.#lexeme = val;
+	}
 
-
+	get lexeme() {
+		return this.#lexeme;
+	}
 }
 
 export default ASTNode;

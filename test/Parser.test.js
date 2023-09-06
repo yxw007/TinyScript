@@ -1,9 +1,11 @@
-import { expect } from "vitest"
-import Parser from '../src/parser/Parser'
+import { expect } from "vitest";
+import Parser from "../src/parser/Parser";
 
 describe("Parser", () => {
 	it("parse", () => {
-		let ast = Parser.parse("int a=1");
-		expect(ast).not.toBe(null);
-	})
+		let expr = Parser.parse("1*2+3");
+		expect(expr).not.toBe(null);
+		expect(expr.child(0)).toBe("+");
+		expect(expr.child(0)).toBe(1);
+	});
 });

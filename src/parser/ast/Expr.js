@@ -1,16 +1,16 @@
 import ASTNode from "./ASTNode";
 import PriorityTable from "../utils/PriorityTable";
+import ASTNodeType from "./ASTNodeType";
+import Factor from "./Factor";
 
 class Expr extends ASTNode {
-	constructor() {
-		super();
+	constructor(type, label) {
+		super(type, label);
 	}
 
 	static fromToken(type, token) {
-		const expr = new Expr();
-		expr.label = token.getValue();
+		const expr = new Expr(type, token.getValue());
 		expr.lexeme = token;
-		expr.type = type;
 		return expr;
 	}
 
@@ -26,34 +26,45 @@ class Expr extends ASTNode {
 	 * E_(k) -> op(k) E(k+1) E_(k) | ε
 	 * race 关系
 	 *
-	 * 表达式的其他形式
-	 * U -> (E) | ++E | --E
+	 * 最终推导文法：
 	 * E(t) -> F E_(t) | U E_(t)
-	 * ! 此文法如何获得的 ?
+	 * U -> (E) | ++E | --E
 	 */
 	static parse(it) {
 		return Expr.E(it, 0);
 	}
 
+	/**
+	 * 文法的一般形式
+	 * E(k) -> E(k+1) E_(k)
+	 * E_(k) -> op(k) E(k+1) E_(k) | ε
+	 *
+	 * 最终推导文法：
+	 * E(t) -> F E_(t) | U E_(t)
+	 *
+	 * 比如：1*3 or ++a
+	 * @param {*} it
+	 * @param {*} k
+	 */
 	static E(it, k) {
+		if (!it.hasNext()) {
+			return null;
+		}
+
 		if (k < PriorityTable.length - 1) {
 			return Expr.combine(
-				it,
 				() => Expr.E(it, k + 1),
 				() => Expr.E_(it, k)
 			);
 		} else {
 			return Expr.race(
-				it,
 				() =>
 					Expr.combine(
-						it,
 						() => Expr.F(it),
 						() => Expr.E_(it, k)
 					),
 				() =>
 					Expr.combine(
-						it,
 						() => Expr.U(it),
 						() => E_(it, k)
 					)
@@ -67,6 +78,10 @@ class Expr extends ASTNode {
 	 * @param {*} k
 	 */
 	static E_(it, k) {
+		if (!it.hasNext()) {
+			return null;
+		}
+
 		const token = it.peek();
 		const value = token.getValue();
 		if (PriorityTable[k].indexOf(value) !== -1) {
@@ -74,7 +89,6 @@ class Expr extends ASTNode {
 			const expr = Expr.fromToken(ASTNodeType.BINARY_EXPR, token);
 			expr.addChild(
 				Expr.combine(
-					it,
 					() => Expr.E(it, k + 1),
 					() => Expr.E_(it, k, it)
 				)
@@ -84,15 +98,65 @@ class Expr extends ASTNode {
 		return null;
 	}
 
-	static U(it) {
-		const token = it.peek();
-		const value = token.getValue();
-		//TODO:
+	static F(it) {
+		const factor = Factor.parse(it);
+		if (!factor) {
+			return null;
+		}
+		if (it.hasNext() && it.peek().getValue() === "(") {
+			return CallExpr.parse(factor, it);
+		}
+
+		return factor;
 	}
 
-	static combine(it, funcA, funcB) {}
+	//U -> (E) | ++E | --E | !E
+	static U(it) {
+		if (!it.hasNext()) {
+			return null;
+		}
 
-	static race(it, funcA, funcB) {}
+		const token = it.peek();
+		const value = token.getValue();
+		if (value === "(") {
+			it.nextMatch("(");
+			const expr = Expr.parse(it);
+			it.nextMatch(")");
+			return expr;
+		} else if (value === "++" || value === "--" || value === "!") {
+			const t = it.peek();
+			it.nextMatch(value);
+			const expr = Expr.fromToken(ASTNodeType.UNARY_EXPR, t);
+			expr.addChild(Expr.parse(it));
+			return expr;
+		}
+		return null;
+	}
+
+	static combine(funcA, funcB) {
+		const a = funcA();
+		if (a == null) {
+			return null;
+		}
+
+		const b = funcB();
+		if (b == null) {
+			return a;
+		}
+
+		const expr = Expr.fromToken(ASTNodeType.BINARY_EXPR, b.lexeme);
+		expr.addChild(a);
+		expr.addChild(b.getChild(0));
+		return expr;
+	}
+
+	static race(funcA, funcB) {
+		const a = funcA();
+		if (a == null) {
+			return funcB();
+		}
+		return a;
+	}
 }
 
 export default Expr;
