@@ -1,20 +1,19 @@
-import ASTNode from "./ASTNode"
-import ASTNodeType from "./ASTNodeType"
-import Stmt from "./Stmt"
+import { ASTNode, ASTNodeType, Stmt } from "../index";
+export class Program extends ASTNode {
+	constructor(type, label) {
+		super(type, label);
+	}
 
-class Program extends ASTNode {
-	constructor() {
-		super(ASTNodeType.PROGRAM, "program");
+	static create() {
+		return new Program(ASTNodeType.PROGRAM, "program");
 	}
 
 	static parse(it) {
-		const program = new Program()
-		let stmt = null
+		const program = Program.create();
+		let stmt = null;
 		while ((stmt = Stmt.parse(it)) != null) {
-			program.addChild(stmt)
+			program.addChild(stmt);
 		}
-		return program
+		return program;
 	}
 }
-
-export default Program;

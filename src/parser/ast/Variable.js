@@ -1,10 +1,12 @@
-import ASTNodeType from "./ASTNodeType";
-import Factor from "./Factor";
+import { ASTNodeType, Factor } from "../index";
 
-class Variable extends Factor {
-	constructor(token, label = null) {
-		super(ASTNodeType.VARIABLE, token?.getValue());
+export class Variable extends Factor {
+	constructor(type, label) {
+		super(type, label);
 		this.typeLexeme = null;
+	}
+	static create(token) {
+		return new Variable(ASTNodeType.VARIABLE, token.getValue());
 	}
 	setTypeLexeme(lexeme) {
 		this.typeLexeme = lexeme;
@@ -13,5 +15,3 @@ class Variable extends Factor {
 		return this.typeLexeme;
 	}
 }
-
-export default Variable;

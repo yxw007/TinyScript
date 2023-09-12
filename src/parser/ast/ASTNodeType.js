@@ -1,6 +1,6 @@
-import Enum from '../../common/Enum'
+import Enum from "../../common/Enum";
 
-export default {
+export const ASTNodeType = {
 	BLOCK: new Enum("BLOCK", 1),
 	//二元表达式，比如：+、-、*、/ 等
 	BINARY_EXPR: new Enum("BINARY_EXPR", 2),
@@ -30,4 +30,4 @@ export default {
 	CALL_EXPR: new Enum("CALL_EXPR", 14),
 	//程序
 	PROGRAM: new Enum("program", 15),
-}
+};

@@ -1,9 +1,7 @@
-import ASTNode from "./ASTNode";
+import { ASTNode, ASTNodeType, Factor } from "../index";
 import PriorityTable from "../utils/PriorityTable";
-import ASTNodeType from "./ASTNodeType";
-import Factor from "./Factor";
 
-class Expr extends ASTNode {
+export class Expr extends ASTNode {
 	constructor(type, label) {
 		super(type, label);
 	}
@@ -158,5 +156,3 @@ class Expr extends ASTNode {
 		return a;
 	}
 }
-
-export default Expr;

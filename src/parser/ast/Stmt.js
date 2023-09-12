@@ -1,7 +1,6 @@
-import ASTNode from "./ASTNode";
-import Expr from "./Expr";
+import { ASTNode, Expr } from "../index";
 
-class Stmt extends ASTNode {
+export class Stmt extends ASTNode {
 	constructor(type, label) {
 		super(type, label);
 	}
@@ -30,5 +29,3 @@ class Stmt extends ASTNode {
 		}
 	}
 }
-
-export default Stmt;

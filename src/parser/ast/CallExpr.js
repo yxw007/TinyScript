@@ -1,8 +1,10 @@
-import ASTNodeType from "./ASTNodeType";
-import Expr from "./Expr";
+import { ASTNodeType, Expr } from "../index";
 
-class CallExpr extends Expr {
-	constructor() {
-		super(ASTNodeType.CALL_EXPR, "call");
+export class CallExpr extends Expr {
+	constructor(type, label) {
+		super(type, label);
+	}
+	static create() {
+		return new CallExpr(ASTNodeType.CALL_EXPR, "call");
 	}
 }

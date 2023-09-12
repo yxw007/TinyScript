@@ -1,10 +1,7 @@
 import ParseException from "../utils/ParseException";
-import ASTNodeType from "./ASTNodeType";
-import Expr from "./Expr";
-import Stmt from "./Stmt";
-import Factor from "./Factor";
+import { ASTNodeType, Expr, Stmt, Factor } from "../index";
 
-class AssignStmt extends Stmt {
+export class AssignStmt extends Stmt {
 	constructor() {
 		super(ASTNodeType.ASSIGN_STMT, "assign");
 	}
@@ -23,5 +20,3 @@ class AssignStmt extends Stmt {
 		return stmt;
 	}
 }
-
-export default AssignStmt;

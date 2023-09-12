@@ -1,10 +1,10 @@
-import ASTNodeType from "./ASTNodeType";
-import Factor from "./Factor";
+import { Factor, ASTNodeType } from "../index";
 
-class Scalar extends Factor {
-	constructor(token) {
-		super(ASTNodeType.SCALAR, token.getValue());
+export class Scalar extends Factor {
+	constructor(type, label) {
+		super(type, label);
+	}
+	static create(token) {
+		return new Scalar(ASTNodeType.SCALAR, token.getValue());
 	}
 }
-
-export default Scalar;

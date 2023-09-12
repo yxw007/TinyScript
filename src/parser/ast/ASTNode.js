@@ -1,8 +1,9 @@
-import AstNodeType from "./ASTNodeType";
+import { ASTNodeType } from "../index";
 
-class ASTNode {
+export class ASTNode {
 	#children = [];
 	#parent = null;
+	/* 词法token */
 	#lexeme = null;
 	#type = null;
 	#label = null;
@@ -24,6 +25,24 @@ class ASTNode {
 	get lexeme() {
 		return this.#lexeme;
 	}
-}
 
-export default ASTNode;
+	set parent(val) {
+		this.#parent = val;
+	}
+
+	get parent() {
+		return this.$parent;
+	}
+
+	addChild(node) {
+		node.parent = this;
+		this.#children.push(node);
+	}
+
+	getChild(index) {
+		if (!this.#children[index]) {
+			return null;
+		}
+		return this.#children[index];
+	}
+}

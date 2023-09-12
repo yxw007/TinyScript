@@ -1,5 +1,5 @@
 import { expect } from "vitest";
-import Parser from "../src/parser/Parser";
+import { Parser } from "../src/parser/Parser";
 
 describe("Parser", () => {
 	it("parse", () => {
