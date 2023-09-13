@@ -8,8 +8,7 @@
  * 读取迭代器工具，方便词法分析、语法分析等
  */
 
-import Linkedlist from "./linkedlist"
-import { END_CHAR } from "./common";
+import Linkedlist from "./linkedlist";
 
 class PeekIterator {
 	#it = null;
@@ -17,7 +16,7 @@ class PeekIterator {
 	#stackPutBack = null;
 	#queueCache = null;
 	#cacheSize = 10;
-	constructor(it, endToken = END_CHAR) {
+	constructor(it, endToken = null) {
 		this.#it = it;
 		this.#endToken = endToken;
 		//! 放回的元素栈
@@ -54,13 +53,11 @@ class PeekIterator {
 			}
 		}
 
-		if (e) {
-			while (this.#queueCache.length > this.#cacheSize - 1) {
-				this.#queueCache.shift();
-			}
-			//!说明：从stackPutBack pop出来的元素，也需要push进缓存
-			this.#queueCache.push(e);
+		while (this.#queueCache.length > this.#cacheSize - 1) {
+			this.#queueCache.shift();
 		}
+		//!说明：从stackPutBack pop出来的元素，也需要push进缓存
+		this.#queueCache.push(e);
 
 		return e;
 	}

@@ -101,6 +101,7 @@ export class Expr extends ASTNode {
 		if (!factor) {
 			return null;
 		}
+
 		if (it.hasNext() && it.peek().getValue() === "(") {
 			return CallExpr.parse(factor, it);
 		}

@@ -6,12 +6,12 @@
  * 相关说明：词法分析
  */
 
-import PeekIterator from "../common/PeekIterator"
-import { END_CHAR, Keywords } from "../common/common"
-import AlphabetHelper from "./AlphabetHelper"
-import LexicalException from "./LexicalException"
-import Token from "./Token"
-import TokenType from "./TokenType"
+import PeekIterator from "../common/PeekIterator";
+import { END_CHAR, Keywords } from "../common/common";
+import AlphabetHelper from "./AlphabetHelper";
+import LexicalException from "./LexicalException";
+import Token from "./Token";
+import TokenType from "./TokenType";
 
 class Lexer {
 	/**
@@ -51,7 +51,7 @@ class Lexer {
 
 	/**
 	 * 处理变量or关键词
-	 * @param {*} it 
+	 * @param {*} it
 	 */
 	static processVarOrKeyword(it) {
 		if (!AlphabetHelper.isLetter(it.peek())) {
@@ -122,7 +122,7 @@ class Lexer {
 				}
 				case 2: {
 					if (lookahead == ".") {
-						state = 4
+						state = 4;
 					} else if (AlphabetHelper.isNumber(lookahead)) {
 						state = 2;
 					} else if (/[e|E]/.test(lookahead)) {
@@ -134,7 +134,7 @@ class Lexer {
 				}
 				case 3: {
 					if (/[e|E]/.test(lookahead)) {
-						state = 5
+						state = 5;
 					} else if (lookahead == ".") {
 						state = 4;
 					} else {
@@ -182,7 +182,10 @@ class Lexer {
 					if (AlphabetHelper.isNumber(lookahead)) {
 						state = 8;
 					} else {
-						return new Token(s.indexOf(".") >= 0 ? TokenType.FLOAT : TokenType.INTEGER, s);
+						return new Token(
+							s.indexOf(".") >= 0 ? TokenType.FLOAT : TokenType.INTEGER,
+							s
+						);
 					}
 				}
 			}
@@ -370,7 +373,7 @@ class Lexer {
 
 	analyse(source) {
 		const tokens = [];
-		const it = new PeekIterator(source);
+		const it = new PeekIterator(source, "\0");
 
 		while (it.hasNext()) {
 			let c = it.peek();
@@ -391,31 +394,31 @@ class Lexer {
 
 			//! 2.识别括号
 			let token = null;
-			if (token = Lexer.processBracket(it)) {
+			if ((token = Lexer.processBracket(it))) {
 				tokens.push(token);
 				continue;
 			}
 
 			//! 3.识别letter
-			if (token = Lexer.processVarOrKeyword(it)) {
+			if ((token = Lexer.processVarOrKeyword(it))) {
 				tokens.push(token);
 				continue;
 			}
 
 			//! 4.识别Number
-			if (token = Lexer.processNumber(it)) {
+			if ((token = Lexer.processNumber(it))) {
 				tokens.push(token);
 				continue;
 			}
 
 			//! 5.识别, +b or =+b  都需要识别成数字+b
-			if (token = Lexer.processSignNumber(it, tokens)) {
+			if ((token = Lexer.processSignNumber(it, tokens))) {
 				tokens.push(token);
 				continue;
 			}
 
 			//! 5.识别Operator
-			if (token = Lexer.processOperator(it)) {
+			if ((token = Lexer.processOperator(it))) {
 				tokens.push(token);
 				continue;
 			}

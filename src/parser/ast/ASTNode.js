@@ -26,12 +26,24 @@ export class ASTNode {
 		return this.#lexeme;
 	}
 
+	get label() {
+		return this.#label;
+	}
+
 	set parent(val) {
 		this.#parent = val;
 	}
 
 	get parent() {
 		return this.$parent;
+	}
+
+	get childSize() {
+		return this.#children.length;
+	}
+
+	getChildren() {
+		return this.#children;
 	}
 
 	addChild(node) {

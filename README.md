@@ -18,4 +18,4 @@
 
 ## 关键词
 - Lexer: 词法相关
-- Lexeme：语义相关
+- Lexeme：词法 or token

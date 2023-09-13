@@ -5,6 +5,8 @@ export class Scalar extends Factor {
 		super(type, label);
 	}
 	static create(token) {
-		return new Scalar(ASTNodeType.SCALAR, token.getValue());
+		let instance = new Scalar(ASTNodeType.SCALAR, token.getValue());
+		instance.lexeme = token;
+		return instance;
 	}
 }
