@@ -1,9 +1,9 @@
-import { expect } from "vitest";
+import { expect, it } from "vitest";
 import { Parser } from "../src/parser/Parser";
 import { ParseUtils } from "../src/parser/utils/ParseUtils";
 
 describe("Parser", () => {
-	it("parse 1", () => {
+	it("parse expr base", () => {
 		let program = Parser.parse("1+2");
 		expect(program.childSize).toBe(1);
 
@@ -15,7 +15,7 @@ describe("Parser", () => {
 		expect(expr.getChild(1).lexeme.getValue()).toBe("2");
 	});
 
-	it("parse 2", () => {
+	it("parse expr mix", () => {
 		let program = Parser.parse("1*2+3");
 		expect(program.childSize).toBe(1);
 

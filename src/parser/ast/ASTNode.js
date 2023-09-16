@@ -1,16 +1,23 @@
 import { ASTNodeType } from "../index";
 
+/**
+ * 抽象语法树根节点
+ */
 export class ASTNode {
+	/* 子节点 */
 	#children = [];
+	/* 父节点 */
 	#parent = null;
 	/* 词法token */
 	#lexeme = null;
+	/* 节点类型 */
 	#type = null;
+	/* 节点名称 */
 	#label = null;
 	/* 存放节点属性 */
 	#props = {};
 	/**
-	 * @param {*} type 类型
+	 * @param {*} type 节点类型
 	 * @param {*} label 节点名称
 	 */
 	constructor(type = null, label = null) {
@@ -24,6 +31,10 @@ export class ASTNode {
 
 	get lexeme() {
 		return this.#lexeme;
+	}
+
+	setLexeme(val) {
+		this.#lexeme = val;
 	}
 
 	get label() {

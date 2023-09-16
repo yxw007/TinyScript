@@ -6,7 +6,9 @@ export class Variable extends Factor {
 		this.typeLexeme = null;
 	}
 	static create(token) {
-		return new Variable(ASTNodeType.VARIABLE, token.getValue());
+		let instance = new Variable(ASTNodeType.VARIABLE, token.getValue());
+		instance.setLexeme(token);
+		return instance;
 	}
 	setTypeLexeme(lexeme) {
 		this.typeLexeme = lexeme;

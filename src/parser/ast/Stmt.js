@@ -1,4 +1,11 @@
-import { ASTNode, Expr } from "../index";
+import {
+	ASTNode,
+	AssignStmt,
+	Block,
+	DeclareStmt,
+	Expr,
+	IFStmt,
+} from "../index";
 
 export class Stmt extends ASTNode {
 	constructor(type, label) {
@@ -13,17 +20,17 @@ export class Stmt extends ASTNode {
 		it.putBack();
 
 		if (token.isVariable() && lookahead.getValue() === "=") {
-			//TODO: 赋值语句
+			return AssignStmt.parse(it);
 		} else if (token.getValue() === "var") {
-			//TODO: 声明语句
+			return DeclareStmt.parse(it);
 		} else if (token.getValue() === "func") {
 			//TODO: 函数声明语句
 		} else if (token.getValue() === "return") {
 			//TODO: return 语句
 		} else if (token.getValue() === "if") {
-			//TODO: if 语句
+			return IFStmt.parse(it);
 		} else if (token.getValue() === "{") {
-			//TODO: block 语句
+			return Block.parse(it);
 		} else {
 			return Expr.parse(it);
 		}

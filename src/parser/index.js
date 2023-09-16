@@ -6,4 +6,8 @@ export * from "./ast/Factor";
 export * from "./ast/Program";
 export * from "./ast/Scalar";
 export * from "./ast/Stmt";
+export * from "./ast/Block";
+export * from "./ast/AssignStmt";
+export * from "./ast/IF";
+export * from "./ast/DeclareStmt";
 export * from "./ast/Variable";
