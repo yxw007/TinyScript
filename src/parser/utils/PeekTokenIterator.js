@@ -1,5 +1,5 @@
-import PeekIterator from "../../common/PeekIterator"
-import ParseException from "./ParseException"
+import PeekIterator from "../../common/PeekIterator";
+import ParseException from "./ParseException";
 
 class PeekTokenIterator extends PeekIterator {
 	constructor(it) {
@@ -9,6 +9,14 @@ class PeekTokenIterator extends PeekIterator {
 	nextMatch(value) {
 		const token = this.next();
 		if (token.getValue() !== value) {
+			throw ParseException.fromToken(token);
+		}
+		return token;
+	}
+
+	nextMatchByType(type) {
+		const token = this.next();
+		if (token.getType() != type) {
 			throw ParseException.fromToken(token);
 		}
 		return token;

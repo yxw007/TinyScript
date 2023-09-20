@@ -11,3 +11,5 @@ export * from "./ast/AssignStmt";
 export * from "./ast/IF";
 export * from "./ast/DeclareStmt";
 export * from "./ast/Variable";
+export * from "./ast/FunctionArgs";
+export * from "./ast/FunctionDeclareStmt";

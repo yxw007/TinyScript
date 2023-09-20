@@ -4,6 +4,7 @@ import {
 	Block,
 	DeclareStmt,
 	Expr,
+	FunctionDeclareStmt,
 	IFStmt,
 } from "../index";
 
@@ -24,7 +25,7 @@ export class Stmt extends ASTNode {
 		} else if (token.getValue() === "var") {
 			return DeclareStmt.parse(it);
 		} else if (token.getValue() === "func") {
-			//TODO: 函数声明语句
+			return FunctionDeclareStmt.parse(it);
 		} else if (token.getValue() === "return") {
 			//TODO: return 语句
 		} else if (token.getValue() === "if") {

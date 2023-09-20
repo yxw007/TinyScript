@@ -33,6 +33,10 @@ export class ASTNode {
 		return this.#lexeme;
 	}
 
+	getLexeme() {
+		return this.#lexeme;
+	}
+
 	setLexeme(val) {
 		this.#lexeme = val;
 	}
