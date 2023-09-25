@@ -41,6 +41,10 @@ export class ASTNode {
 		this.#lexeme = val;
 	}
 
+	get type() {
+		return this.#type;
+	}
+
 	get label() {
 		return this.#label;
 	}

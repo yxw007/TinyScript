@@ -6,6 +6,7 @@ import {
 	Expr,
 	FunctionDeclareStmt,
 	IFStmt,
+	ReturnStmt,
 } from "../index";
 
 export class Stmt extends ASTNode {
@@ -27,7 +28,7 @@ export class Stmt extends ASTNode {
 		} else if (token.getValue() === "func") {
 			return FunctionDeclareStmt.parse(it);
 		} else if (token.getValue() === "return") {
-			//TODO: return 语句
+			return ReturnStmt.parse(it);
 		} else if (token.getValue() === "if") {
 			return IFStmt.parse(it);
 		} else if (token.getValue() === "{") {

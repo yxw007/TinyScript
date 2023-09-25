@@ -3,7 +3,7 @@ class AlphabetHelper {
 	static regNumber = /^[0-9]/;
 	static regLiteral = /^[_a-zA-Z0-9]$/;
 	static regOperator = /^[+\-*/><=!&|^%,]$/;
-	static regEmpty = /^[ \n\r]$/;
+	static regEmpty = /^[ \n\r\t]$/;
 	static regBracket = /^[{}()]$/;
 	static regSign = /^[+-]$/;
 

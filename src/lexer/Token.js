@@ -1,5 +1,5 @@
-import { BASE_TYPES, Keywords } from "../common/common"
-import TokenType from "./TokenType"
+import { BASE_TYPES, Keywords } from "../common/common";
+import TokenType from "./TokenType";
 
 class Token {
 	#type = null;
@@ -39,7 +39,7 @@ class Token {
 	}
 
 	isType() {
-		return BASE_TYPES.includes(this.#type);
+		return BASE_TYPES.includes(this.#value);
 	}
 
 	toString() {

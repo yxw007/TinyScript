@@ -13,3 +13,4 @@ export * from "./ast/DeclareStmt";
 export * from "./ast/Variable";
 export * from "./ast/FunctionArgs";
 export * from "./ast/FunctionDeclareStmt";
+export * from "./ast/ReturnStmt";

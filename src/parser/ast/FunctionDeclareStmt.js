@@ -7,14 +7,14 @@ export class FunctionDeclareStmt extends Stmt {
 		super(ASTNodeType.FUNCTION_DECLARE_STMT, "func");
 	}
 
-	/* 方法形参 */
-	getArgs() {
-		return this.getChild(1);
-	}
-
 	/* 方法名变量 */
 	getFuncVariable() {
 		return this.getChild(0);
+	}
+
+	/* 方法形参 */
+	getArgs() {
+		return this.getChild(1);
 	}
 
 	/* 方法返回值类型 ? */
@@ -47,12 +47,12 @@ export class FunctionDeclareStmt extends Stmt {
 		func.addChild(args);
 		it.nextMatch(")");
 
-		//int
+		//int func return type
 		const keywords = it.nextMatchByType(TokenType.KEYWORD);
 		if (!keywords.isType()) {
 			throw ParseException.fromToken(keywords);
 		}
-		funcVariable.setLexeme(keywords);
+		funcVariable.setTypeLexeme(keywords);
 
 		//block
 		const block = Block.parse(it);
