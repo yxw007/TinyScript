@@ -1,4 +1,4 @@
-import { SymbolType } from "./SymbolType";
+import { SymbolType } from "../index";
 
 export class Symbol {
 	#type = null;

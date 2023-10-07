@@ -1,3 +1,5 @@
+import { Symbol } from "../index";
+
 export class SymbolTable {
 	#parent = null;
 	#children = [];
@@ -74,5 +76,26 @@ export class SymbolTable {
 		return symbol;
 	}
 
-	//TODO: 修改到此处?
+	createLabel(label, lexeme) {
+		const labelSymbol = Symbol.createLabelSymbol(label, lexeme);
+		this.addSymbol(labelSymbol);
+	}
+
+	addChild(child) {
+		child.parent = this;
+		child.level = this.#level + 1;
+		this.#children.push(child);
+	}
+
+	localSize() {
+		return this.#offsetIdx;
+	}
+
+	getSymbols() {
+		return this.#symbols;
+	}
+
+	getChildren() {
+		return this.#children;
+	}
 }
