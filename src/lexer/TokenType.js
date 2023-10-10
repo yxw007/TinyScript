@@ -1,6 +1,6 @@
-import Enum from "../common/Enum"
+import Enum from "../common/Enum";
 
-const TokenType = {
+export const TokenType = {
 	KEYWORD: new Enum("KEYWORD", 1),
 	VARIABLE: new Enum("VARIABLE", 2),
 	OPERATOR: new Enum("OPERATOR", 3),

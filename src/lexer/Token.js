@@ -1,7 +1,7 @@
 import { BASE_TYPES, Keywords } from "../common/common";
 import TokenType from "./TokenType";
 
-class Token {
+export class Token {
 	#type = null;
 	#value = null;
 	constructor(type, value) {

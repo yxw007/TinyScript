@@ -41,6 +41,17 @@ export class ASTNode {
 		this.#lexeme = val;
 	}
 
+	setProp(key, value) {
+		this.#props[key] = value;
+	}
+
+	getProp(key) {
+		if (!key) {
+			throw Error("getProp key is null!");
+		}
+		return this.#props[key];
+	}
+
 	get type() {
 		return this.#type;
 	}
@@ -75,5 +86,9 @@ export class ASTNode {
 			return null;
 		}
 		return this.#children[index];
+	}
+
+	isValueType() {
+		return this.type == ASTNodeType.VARIABLE || this.type == ASTNodeType.SCALAR;
 	}
 }

@@ -95,6 +95,10 @@ export class Symbol {
 		this.#parent = val;
 	}
 
+	setParent(val) {
+		this.#parent = val;
+	}
+
 	toString() {
 		return this.type === SymbolType.LABEL_SYMBOL
 			? this.label

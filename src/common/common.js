@@ -15,3 +15,5 @@ export const Keywords = new Set([
 	"string",
 ]);
 export const END_CHAR = "\0";
+
+export const PROP_ADDRESS = "address";

@@ -12,7 +12,16 @@
   - [x] block语句
   - [x] return语句
   - [x] function声明语句
-- [ ] 翻译(进行中)
+- [ ] 翻译-生成中间代码(三地址代码)(进行中)
+  - [x] 建议符号表
+  - [x] 翻译声明语句
+  - [x] 赋值语句
+  - [x] 表达式
+  - [ ] block语句
+  - [ ] if语句
+  - [ ] 函数声明语句
+  - [ ] return语句
+  - [ ] 函数调用
 - [ ] 中间代码生成器
 - [ ] 目标代码生成器
 
@@ -25,3 +34,5 @@
 ## 关键词
 - Lexer: 词法相关
 - Lexeme：词法 or token
+- TA: Tree Address
+- SP: shift pointer

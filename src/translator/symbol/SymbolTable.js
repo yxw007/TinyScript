@@ -1,4 +1,5 @@
 import { Symbol } from "../index";
+import { Token, TokenType } from "../../lexer";
 
 export class SymbolTable {
 	#parent = null;
@@ -55,6 +56,7 @@ export class SymbolTable {
 		return false;
 	}
 
+	/* 创建变量or常数symbol*/
 	createSymbolByLexeme(lexeme) {
 		let symbol = null;
 		if (lexeme.isScalar()) {
@@ -69,6 +71,7 @@ export class SymbolTable {
 		return symbol;
 	}
 
+	/* 创建临时变量symbol */
 	createVariable() {
 		const lexeme = new Token(TokenType.VARIABLE, `p${this.#tempIdx++}`);
 		const symbol = Symbol.createAddressSymbol(lexeme, this.#offsetIdx++);
