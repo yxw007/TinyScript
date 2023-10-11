@@ -26,13 +26,13 @@ export class SymbolTable {
 	}
 
 	cloneFromSymbolTree(lexeme, layerOffset) {
-		let symbol = this.#children.find(
+		let symbol = this.#symbols.find(
 			(it) => it.lexeme.getValue() == lexeme.getValue()
 		);
 
 		if (symbol) {
 			symbol = symbol.clone();
-			symbol.setLayoutOffset(layerOffset);
+			symbol.setLayerOffset(layerOffset);
 			return symbol;
 		}
 
@@ -44,7 +44,7 @@ export class SymbolTable {
 	}
 
 	exist(lexeme) {
-		let symbol = this.#children.find(
+		let symbol = this.#symbols.find(
 			(it) => it.lexeme.getValue() == lexeme.getValue()
 		);
 		if (symbol) {
@@ -85,8 +85,8 @@ export class SymbolTable {
 	}
 
 	addChild(child) {
-		child.parent = this;
-		child.level = this.#level + 1;
+		child.setParent(this);
+		child.setLevel(this.#level + 1);
 		this.#children.push(child);
 	}
 
@@ -100,5 +100,17 @@ export class SymbolTable {
 
 	getChildren() {
 		return this.#children;
+	}
+
+	setParent(parent) {
+		this.#parent = parent;
+	}
+
+	getLevel() {
+		return this.#level;
+	}
+
+	setLevel(val) {
+		this.#level = val;
 	}
 }

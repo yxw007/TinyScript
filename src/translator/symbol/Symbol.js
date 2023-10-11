@@ -37,7 +37,7 @@ export class Symbol {
 		return symbol;
 	}
 
-	static clone() {
+	clone() {
 		const symbol = new Symbol(this.type);
 		symbol.label = this.label;
 		symbol.offset = this.offset;
@@ -77,6 +77,10 @@ export class Symbol {
 
 	set layerOffset(val) {
 		return (this.#layerOffset = val);
+	}
+
+	setLayerOffset(val) {
+		this.#layerOffset = val;
 	}
 
 	get lexeme() {

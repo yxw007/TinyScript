@@ -32,6 +32,10 @@ export class Translator {
 				this.translateAssignStmt(program, node, symbolTable);
 				break;
 			}
+			case ASTNodeType.BLOCK: {
+				this.translateBlock(program, node, symbolTable);
+				break;
+			}
 			//...
 		}
 	}
@@ -95,5 +99,31 @@ export class Translator {
 			program.add(address);
 			return address.getResult();
 		}
+	}
+	translateBlock(program, node, symbolTable) {
+		const newSymbolTable = new SymbolTable();
+		symbolTable.addChild(newSymbolTable);
+
+		program.add(
+			new TAInstruction(
+				TAInstructionType.SP,
+				null,
+				null,
+				-symbolTable.localSize()
+			)
+		);
+
+		for (const child of node.getChildren()) {
+			this.translateStmt(program, child, newSymbolTable);
+		}
+
+		program.add(
+			new TAInstruction(
+				TAInstructionType.SP,
+				null,
+				null,
+				+symbolTable.localSize()
+			)
+		);
 	}
 }
