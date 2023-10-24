@@ -6,6 +6,31 @@ export class IFStmt extends Stmt {
 	constructor() {
 		super(ASTNodeType.IF_STMT, "if");
 	}
+
+	getExpr() {
+		return this.getChild(0);
+	}
+
+	getBlock() {
+		return this.getChild(1);
+	}
+
+	getElseBlock() {
+		const block = this.getChild(2);
+		if (block instanceof Block) {
+			return block;
+		}
+		return null;
+	}
+
+	getElseIfStmt() {
+		const ifStmt = this.getChild(2);
+		if (ifStmt instanceof IFStmt) {
+			return ifStmt;
+		}
+		return null;
+	}
+
 	//IFStmt -> if(Expr) {Block} Tail
 	static parse(it) {
 		const token = it.nextMatch("if");

@@ -36,7 +36,10 @@ export class Translator {
 				this.translateBlock(program, node, symbolTable);
 				break;
 			}
-			//...
+			case ASTNodeType.IF_STMT: {
+				this.translateIfStmt(program, node, symbolTable);
+				break;
+			}
 		}
 	}
 	translateDeclareStmt(program, node, symbolTable) {
@@ -125,5 +128,41 @@ export class Translator {
 				+symbolTable.localSize()
 			)
 		);
+	}
+	translateIfStmt(program, node, symbolTable) {
+		const expr = node.getExpr();
+		const exprAddr = this.translateExpr(program, expr, symbolTable);
+		const ifInstruction = new TAInstruction(
+			TAInstructionType.IF,
+			null,
+			null,
+			exprAddr,
+			null
+		);
+		program.add(ifInstruction);
+
+		this.translateBlock(program, node.getBlock(), symbolTable);
+		let gotoInstruction = null;
+		if (node.getChild(2)) {
+			//! 如果有2个孩子，为false是需要跳入第2个孩子的第一条指令位置
+			gotoInstruction = new TAInstruction(TAInstructionType.GOTO, null, null);
+			program.add(gotoInstruction);
+			const labelEndif = program.addLabel();
+			ifInstruction.setArg2(labelEndif.getArg1());
+		}
+
+		if (node.getElseBlock()) {
+			this.translateBlock(program, node.getElseBlock(), symbolTable);
+		} else if (node.getElseIfStmt()) {
+			this.translateIfStmt(program, node.getElseIfStmt(), symbolTable);
+		}
+
+		// if(expr) {... GOTO } else {...}
+		const labelEnd = program.addLabel();
+		if (node.getChild(2)) {
+			gotoInstruction.setArg1(labelEnd.getArg1());
+		} else {
+			ifInstruction.setArg2(labelEnd.getArg1());
+		}
 	}
 }

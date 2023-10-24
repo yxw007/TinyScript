@@ -1,4 +1,4 @@
-import { SymbolTable } from ".";
+import { SymbolTable, TAInstruction, TAInstructionType } from ".";
 
 export class TAProgram {
 	#instructions = [];
@@ -21,6 +21,14 @@ export class TAProgram {
 
 	add(instruction) {
 		this.#instructions.push(instruction);
+	}
+
+	addLabel() {
+		const label = "L" + this.#labelCounter++;
+		const instruction = new TAInstruction(TAInstructionType.LABEL, null, null);
+		instruction.setArg1(label);
+		this.add(instruction);
+		return instruction;
 	}
 
 	getInstructions() {

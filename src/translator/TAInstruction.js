@@ -23,10 +23,13 @@ export class TAInstruction {
 				}
 			}
 			case TAInstructionType.GOTO: {
+				return `GOTO ${this.#arg1}`;
 			}
 			case TAInstructionType.IF: {
+				return `IF ${this.#arg1} ELSE ${this.#arg2}`;
 			}
 			case TAInstructionType.LABEL: {
+				return `${this.#arg1}:`;
 			}
 			case TAInstructionType.CALL: {
 			}
@@ -41,6 +44,22 @@ export class TAInstruction {
 				throw new Error("unknown opcode type :", this.#type);
 			}
 		}
+	}
+
+	setArg1(arg) {
+		this.#arg1 = arg;
+	}
+
+	getArg1() {
+		return this.#arg1;
+	}
+
+	setArg2(arg) {
+		this.#arg2 = arg;
+	}
+
+	getArg2() {
+		return this.#arg2;
 	}
 
 	getType() {
