@@ -40,6 +40,18 @@ export class Translator {
 				this.translateIfStmt(program, node, symbolTable);
 				break;
 			}
+			case ASTNodeType.FUNCTION_DECLARE_STMT: {
+				this.translateFunctionDeclareStmt(program, node, symbolTable);
+				break;
+			}
+			case ASTNodeType.RETURN_STMT: {
+				this.translateReturnStmt(program, node, symbolTable);
+				break;
+			}
+			case ASTNodeType.CALL_EXPR: {
+				this.translateCallExpr(program, node, symbolTable);
+				break;
+			}
 		}
 	}
 	translateDeclareStmt(program, node, symbolTable) {
@@ -83,7 +95,9 @@ export class Translator {
 			node.setProp(PROP_ADDRESS, address);
 			return address;
 		} else if (node.type == ASTNodeType.CALL_EXPR) {
-			//TODO:
+			const address = this.translateCallExpr(program, node, symbolTable);
+			address.setProp(PROP_ADDRESS, address);
+			return address;
 		} else if (node instanceof Expr) {
 			const lexeme = node.getLexeme();
 			for (const child of node.getChildren()) {
@@ -165,4 +179,34 @@ export class Translator {
 			ifInstruction.setArg2(labelEnd.getArg1());
 		}
 	}
+	translateFunctionDeclareStmt(program, node, symbolTable) {
+		const newSymbolTable = new SymbolTable();
+		symbolTable.addChild(newSymbolTable);
+
+		const label = program.addLabel();
+		label.setArg2(node.getLexeme().getValue());
+		//! 1.方法名加入符号表中
+		newSymbolTable.createLabel(label.getArg1(), node.getLexeme());
+
+		//! 2.参数加入符号表
+		const args = node.getArgs().getChildren();
+		for (const arg of args) {
+			newSymbolTable.createSymbolByLexeme(arg.getLexeme());
+		}
+
+		//! 3.翻译方法体block
+		const block = node.getBlock();
+		for (const child of block.getChildren()) {
+			this.translateStmt(program, child, newSymbolTable);
+		}
+	}
+
+	translateReturnStmt(program, node, symbolTable) {
+		const result = this.translateExpr(program, node.getChild(0), symbolTable);
+		program.add(
+			new TAInstruction(TAInstructionType.RETURN, null, null, result)
+		);
+	}
+
+	translateCallExpr(program, node, symbolTable) {}
 }

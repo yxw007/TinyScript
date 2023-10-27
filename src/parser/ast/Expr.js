@@ -1,4 +1,4 @@
-import { ASTNode, ASTNodeType, Factor } from "../index";
+import { ASTNode, ASTNodeType, Factor, CallExpr } from "../index";
 import PriorityTable from "../utils/PriorityTable";
 
 export class Expr extends ASTNode {

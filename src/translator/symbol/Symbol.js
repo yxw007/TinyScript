@@ -34,6 +34,7 @@ export class Symbol {
 	static createLabelSymbol(label, lexeme) {
 		const symbol = new Symbol(SymbolType.LABEL_SYMBOL);
 		symbol.label = label;
+		symbol.lexeme = lexeme;
 		return symbol;
 	}
 

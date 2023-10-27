@@ -34,6 +34,7 @@ export class TAInstruction {
 			case TAInstructionType.CALL: {
 			}
 			case TAInstructionType.RETURN: {
+				return `RETURN ${this.#arg1}`;
 			}
 			case TAInstructionType.PARAM: {
 			}

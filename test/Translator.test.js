@@ -148,4 +148,33 @@ describe("Translator", () => {
 				"L3:"
 		);
 	});
+
+	it("declare function", () => {
+		const source = `
+		func add(int a,int b) int {
+			return a + b
+		}
+		`;
+		const ast = Parser.parse(source);
+		const translator = new Translator();
+		const program = translator.translate(ast);
+		const target = program.toString();
+		expect(target).toBe("L0:\n" + "p0 = a + b\n" + "RETURN p0");
+	});
+
+	it("declare function complex", () => {
+		const source = `
+		func fact(int n)  int {
+			if(n == 0) {
+				return 1
+			}
+			return fact(n-1) * n
+		}
+		`;
+		const ast = Parser.parse(source);
+		const translator = new Translator();
+		const program = translator.translate(ast);
+		const target = program.toString();
+		expect(target).toBe("L0:\n" + "p0 = a + b\n" + "RETURN p0");
+	});
 });
