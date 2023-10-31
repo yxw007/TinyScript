@@ -32,11 +32,13 @@ export class TAInstruction {
 				return `${this.#arg1}:`;
 			}
 			case TAInstructionType.CALL: {
+				return `CALL ${this.#arg1}`;
 			}
 			case TAInstructionType.RETURN: {
 				return `RETURN ${this.#arg1}`;
 			}
 			case TAInstructionType.PARAM: {
+				return `PARAM ${this.#arg1} ${this.#arg2}`;
 			}
 			case TAInstructionType.SP: {
 				return `SP ${this.#arg1}`;

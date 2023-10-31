@@ -175,6 +175,21 @@ describe("Translator", () => {
 		const translator = new Translator();
 		const program = translator.translate(ast);
 		const target = program.toString();
-		expect(target).toBe("L0:\n" + "p0 = a + b\n" + "RETURN p0");
+		expect(target).toBe(
+			"L0:\n" +
+				"p0 = n == 0\n" +
+				"IF p0 ELSE L1\n" +
+				"SP -2\n" +
+				"RETURN 1\n" +
+				"SP 2\n" +
+				"L1:\n" +
+				"p3 = n - 1\n" +
+				"PARAM p3 0\n" +
+				"SP -5\n" +
+				"CALL L0\n" +
+				"SP 5\n" +
+				"p4 = p1 * n\n" +
+				"RETURN p4"
+		);
 	});
 });

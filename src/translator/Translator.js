@@ -96,7 +96,7 @@ export class Translator {
 			return address;
 		} else if (node.type == ASTNodeType.CALL_EXPR) {
 			const address = this.translateCallExpr(program, node, symbolTable);
-			address.setProp(PROP_ADDRESS, address);
+			node.setProp(PROP_ADDRESS, address);
 			return address;
 		} else if (node instanceof Expr) {
 			const lexeme = node.getLexeme();
@@ -208,5 +208,44 @@ export class Translator {
 		);
 	}
 
-	translateCallExpr(program, node, symbolTable) {}
+	translateCallExpr(program, node, symbolTable) {
+		const factor = node.getChild(0);
+		const returnValue = symbolTable.createVariable();
+
+		//? 没搞懂为啥这里还要创建一次变量
+		symbolTable.createVariable();
+
+		for (let i = 1; i < node.getChildren().length; i++) {
+			const expr = node.getChild(i);
+			const exprAddr = this.translateExpr(program, expr, symbolTable);
+			program.add(
+				new TAInstruction(TAInstructionType.PARAM, null, null, exprAddr, i - 1)
+			);
+		}
+
+		const funcAddr = symbolTable.cloneFromSymbolTree(factor.getLexeme(), 0);
+		program.add(
+			new TAInstruction(
+				TAInstructionType.SP,
+				null,
+				null,
+				-symbolTable.localSize()
+			)
+		);
+
+		program.add(
+			new TAInstruction(TAInstructionType.CALL, null, null, funcAddr, null)
+		);
+
+		program.add(
+			new TAInstruction(
+				TAInstructionType.SP,
+				null,
+				null,
+				symbolTable.localSize()
+			)
+		);
+
+		return returnValue;
+	}
 }
